@@ -2,8 +2,11 @@ import { StyleSheet, Text, ImageBackground,
    View, TouchableOpacity, TextInput, KeyboardAvoidingView, 
    Platform } from "react-native";
 import React, { useState } from "react";
+import { StatusBar  } from 'expo-status-bar';
+const backImage = require('../../Source/Photo_BG.png');
 
-const LoginScreen = ({changeScrenn}) => {
+
+const LoginScreen = ({ navigation }) => {
 
    const [mail, setMail] =useState('');
    const [password, setPassword] =useState('');
@@ -13,38 +16,55 @@ const LoginScreen = ({changeScrenn}) => {
 
    const register =()=> {
     if (!mail || !password) { alert("Enter all data pleace!!!"); return }
-    console.log(`Email: ${ mail }, Password: ${password}`)
+    navigation.navigate('Home', { screen: 'PostsScreen' });
    }
 
    const passwShow =()=> alert(`Your password is: ${password}`);
 
    return (
-    <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={ styles.containerKeyB } >
-      <View style={ styles.container }>
+    
+      <View style={styles.maincontainer}>
+        <ImageBackground source={backImage} style={styles.backImg}>
+          <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={ styles.containerKeyB } >
+             <View style={ styles.container }>
 
-        <Text style={ styles.title }>Login</Text>
+                <Text style={ styles.title }>Login</Text>
   
-        <TextInput style={ styles.inputMailPassw } placeholder="Email address" inputMode="email" value={ mail }  onChangeText={handleMail}/>
-        <TextInput style={ styles.inputMailPassw } placeholder="Password" secureTextEntry={true} value={ password }  onChangeText={handlePassword}/>
+                <TextInput style={ styles.inputMailPassw } placeholder="Email address" inputMode="email" value={ mail }  onChangeText={handleMail}/>
+                <TextInput style={ styles.inputMailPassw } placeholder="Password" secureTextEntry={true} value={ password }  onChangeText={handlePassword}/>
         
-        <TouchableOpacity style={ styles.passwShow } activeOpacity={0.5} onPress={passwShow}>
-             <Text style={ styles.passwShowText }>Show</Text>
-        </TouchableOpacity>  
+                <TouchableOpacity style={ styles.passwShow } activeOpacity={0.5} onPress={passwShow}>
+                  <Text style={ styles.passwShowText }>Show</Text>
+                </TouchableOpacity>  
 
-        <TouchableOpacity style={ styles.registerButton } activeOpacity={0.5} onPress={register}>
-          <Text style={ styles.registerButtonText }>Login</Text>
-        </TouchableOpacity>
+                <TouchableOpacity style={ styles.registerButton } activeOpacity={0.5} onPress={register}>
+                  <Text style={ styles.registerButtonText }>Login</Text>
+                </TouchableOpacity>
 
-        <TouchableOpacity style={ styles.loginLink } activeOpacity={0.5}  onPress={()=>changeScrenn(1)} >
-             <Text style={ styles.loginLinkText }>Don't have an account? Register</Text>
-        </TouchableOpacity> 
+                <TouchableOpacity style={ styles.loginLink } activeOpacity={0.5} onPress={() => navigation.navigate("Registratione")}>
+                  <Text style={ styles.loginLinkText }>Don't have an account? Register</Text>
+                </TouchableOpacity> 
 
-      </View>
-     </KeyboardAvoidingView> 
+              </View>
+
+            </KeyboardAvoidingView> 
+          </ImageBackground>
+       <StatusBar style="auto" />  
+     </View>
+
    )
 };
 
 const styles = StyleSheet.create({
+  maincontainer: {
+    flex: 1,
+    alignItems: 'center',
+  }, 
+  backImg: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    width: '100%'
+  },
     container: {
       backgroundColor: '#FFFFFF',
       alignItems: 'center',
